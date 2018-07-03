@@ -35,17 +35,25 @@ $(function () {
         return scrollTop + height === docHeight
     }
 
-    var art1 = $('#rawEvents').find('article'),
-        art2 = $('#debouncedEvents').find('article')
+    var loadMoreItems = function () {
+        art1.append(generatedItems(startIndex, 10))
+        art2.append(generatedItems(startIndex, 10))
+        startIndex += 10
+    }
 
-    art1.append(generatedItems(1, 10))
-    art2.append(generatedItems(1, 10))
+    var art1 = $('#rawEvents').find('article'),
+        art2 = $('#debouncedEvents').find('article'),
+        startIndex = 1
+
+    loadMoreItems()
 
     // $(window).on('scroll', function () {
     //     console.log(isPageBottomReached())
     // })
 
     $(window).on('scroll', _.debounce(function () {
-        console.log(isPageBottomReached())
+        if (isPageBottomReached()) {
+            loadMoreItems()
+        }
     }, 200))
 })
