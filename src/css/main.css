@@ -20,4 +20,5 @@ main section:first-child {
     margin-left: auto;
     margin-right: auto;
     margin-top: 5px;
+    line-height: 200px;
 }
