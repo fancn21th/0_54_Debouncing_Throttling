@@ -1,0 +1,23 @@
+main {
+    width: 100%;
+}
+
+main section {
+    float: left;
+    width: 50%;
+    background: #eee;
+    text-align: center;
+}
+
+main section:first-child {
+    background-color: #999;
+}
+
+.item {
+    width: 80%;
+    height: 200px;
+    border: 5px solid red;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+}
