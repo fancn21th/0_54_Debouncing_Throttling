@@ -31,7 +31,7 @@ $(function () {
         var scrollTop = $(window).scrollTop(),
             height = $(window).height(),
             docHeight = $(document).height()
-        console.log('window.scrollTop():' + scrollTop + ' window.height():' +  height + ' document.height():' + docHeight)
+        console.log('window.scrollTop():', ' window.height():', ' document.height():', docHeight)
         return scrollTop + height === docHeight
     }
 
@@ -53,15 +53,15 @@ $(function () {
     //     }
     // })
 
-    // $(window).on('scroll', _.debounce(function () {
-    //     if (isPageBottomReached()) {
-    //         loadMoreItems()
-    //     }
-    // }, 200))
-
-    $(window).on('scroll', _.throttle(function () {
+    $(window).on('scroll', _.debounce(function () {
         if (isPageBottomReached()) {
             loadMoreItems()
         }
-    }, 300))
+    }, 200))
+
+    // $(window).on('scroll', _.throttle(function () {
+    //     if (isPageBottomReached()) {
+    //         loadMoreItems()
+    //     }
+    // }, 300))
 })
