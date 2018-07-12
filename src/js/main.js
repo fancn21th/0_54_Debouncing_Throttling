@@ -11,10 +11,8 @@ $(function () {
         };
     }
 
+    // as long as it continues to be invoked, it will not be triggered
     var debounce = function (func, wait) {
-        // when func invocation starts
-        // when func invocation stops
-        // invoke the func after func invocation stops in wait milliseconds
         var timeout = null
 
         return function () {
@@ -26,6 +24,11 @@ $(function () {
             clearTimeout(timeout)
             timeout = setTimeout(later, wait)
         }
+    }
+
+    // as long as it continues to be invoked, raise on every interval
+    var throttle = function (func, wait) {
+
     }
 
     var itemTpl = [
