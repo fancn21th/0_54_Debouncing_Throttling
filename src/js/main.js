@@ -11,6 +11,23 @@ $(function () {
         };
     }
 
+    var debounce = function (func, wait) {
+        // when func invocation starts
+        // when func invocation stops
+        // invoke the func after func invocation stops in wait milliseconds
+        var timeout = null
+
+        return function () {
+            var context = this, args = arguments
+            var later = function() {
+                timeout = null
+                func.apply(context, args)
+            }
+            clearTimeout(timeout)
+            timeout = setTimeout(later, wait)
+        }
+    }
+
     var itemTpl = [
         '<div class="item">',
         '{content}',
@@ -31,7 +48,7 @@ $(function () {
         var scrollTop = $(window).scrollTop(),
             height = $(window).height(),
             docHeight = $(document).height()
-        console.log('window.scrollTop():', ' window.height():', ' document.height():', docHeight)
+        console.log('window.scrollTop():', scrollTop, ' window.height():', height, ' document.height():', docHeight)
         return scrollTop + height === docHeight
     }
 
@@ -53,15 +70,21 @@ $(function () {
     //     }
     // })
 
-    $(window).on('scroll', _.debounce(function () {
-        if (isPageBottomReached()) {
-            loadMoreItems()
-        }
-    }, 200))
+    // $(window).on('scroll', _.debounce(function () {
+    //     if (isPageBottomReached()) {
+    //         loadMoreItems()
+    //     }
+    // }, 200))
 
     // $(window).on('scroll', _.throttle(function () {
     //     if (isPageBottomReached()) {
     //         loadMoreItems()
     //     }
     // }, 300))
+
+    $(window).on('scroll', debounce(function () {
+        if (isPageBottomReached()) {
+            loadMoreItems()
+        }
+    }, 200))
 })
