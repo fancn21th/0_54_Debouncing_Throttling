@@ -13,7 +13,7 @@ $(function () {
 
     // as long as it continues to be invoked, it will not be triggered
     var debounce = function (func, wait) {
-        var timeout = null
+        var timeout
 
         return function () {
             var context = this, args = arguments
@@ -28,7 +28,21 @@ $(function () {
 
     // as long as it continues to be invoked, raise on every interval
     var throttle = function (func, wait) {
+        var timeout // as a guard
 
+        return function() {
+            var context = this, args = arguments
+
+            var later = function() {
+                timeout = false
+            }
+
+            if(!timeout) {
+                func.apply(context, args) // invoke it right away
+                timeout = true
+                setTimeout(later, wait)
+            }
+        }
     }
 
     var itemTpl = [
@@ -85,7 +99,15 @@ $(function () {
     //     }
     // }, 300))
 
-    $(window).on('scroll', debounce(function () {
+    // custom
+
+    // $(window).on('scroll', debounce(function () {
+    //     if (isPageBottomReached()) {
+    //         loadMoreItems()
+    //     }
+    // }, 200))
+
+    $(window).on('scroll', throttle(function () {
         if (isPageBottomReached()) {
             loadMoreItems()
         }
